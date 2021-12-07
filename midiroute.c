@@ -1,4 +1,4 @@
-
+  
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -39,6 +39,8 @@ int open_seq(snd_seq_t **seq_handle, int in_ports[], int out_ports[], int num_in
       return(-1);
     }
   }
+  fprintf(stderr, "Done.\n");
+
   return(0);
 }
 
@@ -68,6 +70,8 @@ void midi_route(snd_seq_t *seq_handle, int out_ports[], int split_point) {
       snd_seq_event_output_direct(seq_handle, ev);
     }
     snd_seq_free_event(ev);
+      fprintf(stderr, "print.\n");
+
   } while (snd_seq_event_input_pending(seq_handle, 0) > 0);
 }
 
@@ -94,6 +98,8 @@ int main(int argc, char *argv[]) {
   while (1) {
     if (poll(pfd, npfd, 100000) > 0) {
       midi_route(seq_handle, out_ports, split_point);
+        fprintf(stderr, "Looping.\n");
+
     }  
   }
 }
